@@ -4,6 +4,7 @@ from flask_migrate import Migrate
 from os import path
 import os 
 from flask_login import LoginManager
+from datetime import datetime
 
 #initialise sql database for accounts and data storage
 db = SQLAlchemy()
@@ -34,6 +35,9 @@ def create_app():
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
 
+    #register a jinja filter for formatting CSV table output
+    app.jinja_env.filters['custom_datetime_format'] = custom_datetime_format
+
     from .models import User
     create_database(app)
     
@@ -53,3 +57,15 @@ def create_database(app):
             db.create_all()
         print('Created Database.')
 
+#use for table csv output for dattime formatting
+def custom_datetime_format(datetime_str):
+    # Parse the input datetime string
+    input_format = '%Y-%m-%dT%H:%M:%S.%fZ'
+    output_format = '%Y-%m-%d'
+    
+    try:
+        datetime_obj = datetime.strptime(datetime_str, input_format)
+        formatted_datetime = datetime_obj.strftime(output_format)
+        return formatted_datetime
+    except ValueError:
+        return "Invalid Datetime"
