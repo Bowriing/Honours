@@ -3,6 +3,7 @@ from .models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
+from .models import CSVData
 
 
 auth = Blueprint('auth', __name__)
@@ -25,8 +26,6 @@ def login():
             flash('Email does not exist', category='error')
             
     return render_template('login.html')
-            
-        
                 
 @auth.route('/logout')
 @login_required #cannot be accessed unless logged in
@@ -64,3 +63,40 @@ def sign_up():
             return redirect(url_for('views.home'))
             
     return render_template("sign-up.html")
+
+#CSV FUNCTIONS
+@auth.route('upload-csv', methods = ['POST'])
+def upload_csv():
+    if 'csv_file' not in request.files:
+        flash('No file to upload', category='error')
+        return redirect(url_for('views.home'))
+    
+    csv_file = request.files['csv_file']
+
+    #verification of file
+    if csv_file.filename == '':
+        flash('No selected file', category='error')
+        return redirect(url_for('views.home'))
+    
+    if not csv_file.filename.endswith('.csv'):
+        flash('Invalid file format, please upload a csv file', category='error')
+        return redirect(url_for('views.home'))
+    
+    #read the csv file for upload
+    csv_content = csv_file.read().decode('utf-8')
+
+    #upload data to users account in database
+    if current_user.csv_data:
+        current_user.csv_data.csv_content = csv_content #set data to user data field/update no append
+
+    #if an existing csvdate field is not there then create a new one with associated to signed in user on the database
+    else:
+        new_csv_data = CSVData(csv_content=csv_content, user_id=current_user.id)
+        current_user.csv_data = new_csv_data
+
+    #upload changes/updates to the sql database
+    db.session.commit()
+
+
+    flash('Successfully uploaded CSV', category='success')
+    return redirect(url_for('views.home'))
