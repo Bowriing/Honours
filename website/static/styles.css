@@ -6,3 +6,11 @@
 .nav-username{
     color: greenyellow !important;
 }
+
+:root{
+    --dynamic-color: {{ session['color'] | default('#111111', true) }};
+  }
+
+  .dynamic-color { 
+    color: var(--dynamic-color);
+  }
