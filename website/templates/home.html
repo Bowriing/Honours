@@ -45,7 +45,7 @@
             <form method="POST" enctype="multipart/form-data" action="/upload-csv" style="width: 300px;">
                 <div class="custom-file mb-2" style="display: flex;">
                     <input type="file" class="custom-file-input" id="csv_file" name="csv_file" accept=".csv" required>
-                    <label class="custom-file-label" for="csv_file" style="text-align: left;">Choose CSV file...</label>
+                    <label class="custom-file-label" for="csv_file" style="text-align: left; overflow: hidden;">Choose CSV file...</label>
                 </div>
                 <div class="mb-2" style="display: flex; justify-content: space-evenly;">
                     <button type="submit" class="btn btn-dark" style="width: 125px;">Upload CSV</button>
@@ -57,5 +57,20 @@
         </div>
     </div>
 </div>
-
 {% endblock %}
+
+{%block scripts%}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Target the file input element
+        var fileInput = document.getElementById('csv_file');
+        fileInput.addEventListener('change', function(e) {
+            // Retrieve the name of the selected file
+            var fileName = e.target.files[0].name;
+            // Find the label corresponding to the file input and update its text
+            var fileLabel = document.querySelector("label[for='csv_file']");
+            fileLabel.textContent = fileName;
+        });
+    });
+    </script>
+{%endblock%}
