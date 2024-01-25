@@ -2,9 +2,9 @@
 {% block title %} Home {% endblock %}
 
 {%block content %}
-<h1>Home Page</h1>
 
-<div class="container">
+<div class="container" align=center>
+    <h1>Home Page</h1>
     {% if csv_data %}
     <h2>CSV Data</h2>
     <div class="scrollable-table">
@@ -39,17 +39,20 @@
     {% endif %}
 </div>
 
-
-
-<div class="container mt-4">
+<div class="container mt-4" align="center">
     <div class="row">
         <div class="col-md-6 offset-md-3">
-            <form method="POST" enctype="multipart/form-data" action="/upload-csv">
-                <div class="custom-file mb-2">
+            <form method="POST" enctype="multipart/form-data" action="/upload-csv" style="width: 300px;">
+                <div class="custom-file mb-2" style="display: flex;">
                     <input type="file" class="custom-file-input" id="csv_file" name="csv_file" accept=".csv" required>
-                    <label class="custom-file-label" for="csv_file">Choose CSV file</label>
+                    <label class="custom-file-label" for="csv_file" style="text-align: left;">Choose CSV file...</label>
                 </div>
-                <button type="submit" class="btn btn-dark">Upload CSV</button>
+                <div class="mb-2" style="display: flex; justify-content: space-evenly;">
+                    <button type="submit" class="btn btn-dark" style="width: 125px;">Upload CSV</button>
+                </div>
+            </form>
+            <form method="POST" enctype="multipart/form-data" action="/delete-csv">
+                <button type="submit" class="btn btn-dark" style="width: 125px;">Delete CSV</button>
             </form>
         </div>
     </div>
