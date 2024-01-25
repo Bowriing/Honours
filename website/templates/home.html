@@ -44,10 +44,10 @@
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-6 offset-md-3">
-            <form method="POST" enctype="multipart/form-data" action="{{ url_for('auth.upload_csv') }}">
-                <div class="mb-3">
-                    <label for="csv_file" class="form-label">Upload CSV File</label>
-                    <input type="file" class="form-control" id="csv_file" name="csv_file" accept=".csv" required>
+            <form method="POST" enctype="multipart/form-data" action="/upload-csv">
+                <div class="custom-file mb-3">
+                    <input type="file" class="custom-file-input" id="csv_file" name="csv_file" accept=".csv" required>
+                    <label class="custom-file-label" for="csv_file">Choose CSV file</label>
                 </div>
                 <button type="submit" class="btn btn-primary">Upload CSV</button>
             </form>
