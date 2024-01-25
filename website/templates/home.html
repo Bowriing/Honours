@@ -1,6 +1,6 @@
 {% extends "base.html"%}
 {% block title %} Home {% endblock %}
-{%block scripts%}<script src="{{ url_for('static', filename='scripts.js') }}"></script>{%endblock%}
+{%block scripts%}<script src="{{ url_for('static', filename='scripts/csvUploadNameUpdater.js') }}"></script>{%endblock%}
 
 {%block content %}
 
@@ -55,6 +55,8 @@
             <form method="POST" enctype="multipart/form-data" action="/delete-csv">
                 <button type="submit" class="btn btn-dark" style="width: 125px;">Delete CSV</button>
             </form>
+            <a href="/howto" class="text-success" style="font-size: 12px;">Need help getting data?</a>
+
         </div>
     </div>
 </div>

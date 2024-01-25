@@ -1,0 +1,16 @@
+.scrollable-table {
+    overflow-y: auto;
+    height: 500px;
+}
+
+.img-tut{
+    width: 500px;
+}
+
+.tut-page{
+    background-color: rgb(243, 243, 243);
+}
+
+.spacer{
+    height: 50px;
+}
