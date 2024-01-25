@@ -4,7 +4,7 @@ from flask_login import login_required, current_user
 
 views = Blueprint('views', __name__)
 
-@views.route('/', methods=['GET', 'POST'])
+@views.route('/')
 @login_required
 def home():
     #retrieve the csv data if any from user
@@ -15,5 +15,10 @@ def home():
 @login_required
 def preferences():
     return render_template("preferences.html")
+
+@views.route('/howto')
+@login_required
+def howto():
+    return render_template("howto.html")
 
 

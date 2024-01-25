@@ -3,23 +3,26 @@
 
 {%block content %}
 
-<h1>Login Page</h1>
+<div class="container" style="display: flex; justify-content: center; align-items: center; height: 90vh;">
+    <form method="POST" style="width: 500px;">
+        <h3 align="center">Login</h3>
+    
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email">
+        </div>
+    
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password">
+        </div>
+    
+        <br />
 
-<form method="POST">
-    <h3 align="center">Login</h3>
-
-    <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email">
-    </div>
-
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password">
-    </div>
-
-    <br />
-    <button type="submit" class="btn btn-primary">Login</button>
-</form>
+        <div class="form-button" align="center">
+            <button type="submit" class="btn btn-dark" style="width: 100px;">Login</button>
+        </div>
+    </form>
+</div>
 
 {% endblock %}

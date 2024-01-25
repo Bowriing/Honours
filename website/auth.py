@@ -101,6 +101,20 @@ def upload_csv():
     flash('Successfully uploaded CSV', category='success')
     return redirect(url_for('views.home'))
 
+@auth.route('/delete-csv', methods=['POST'])
+@login_required
+def delete_csv():
+    if current_user.csv_data:
+        CSVData.query.filter_by(user_id=current_user.id).delete()
+        db.session.commit()
+        flash('CSV data successfully deleted.', category='success')
+
+    else:
+        flash('No CSV data to delete', category='error')
+
+    return redirect(url_for('views.home'))
+
+
 @auth.route('/preference-color-picker', methods=['GET','POST'])
 @login_required
 def pick_color():

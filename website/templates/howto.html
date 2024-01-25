@@ -1,0 +1,71 @@
+{% extends "base.html"%}
+{% block title %} Tutorial {% endblock %}
+{%block scripts%}{%endblock%}
+
+{%block content %}
+
+<div class="tut-page" style="display: block; justify-content: center; height: max-content; align-items: center; border-radius: 10px; margin-top: 10px;">
+    <h1 align="center">How to collect your CSV Data for usage.</h1>
+    <br />
+
+    <div class="container mb-3">
+        <h2>Step 1:</h2>
+        <p>
+            First press this <a href="https://glowmarkt.com/" class="text-success" style="font-weight: bold;">link</a> to enter glowmarkt.com to obtain your data.
+        </p>
+    </div>
+
+    <div class="spacer"></div>
+
+    <div class="container mb-3">
+        <h2>Step 2:</h2>
+        <p>
+            Click the "sign up here" as image shows.
+        </p>
+        <img src="{{ url_for('static', filename='tutorialImages/Sign Up Here.png') }}" class="img-tut">
+    </div>
+
+    <div class="spacer"></div>
+
+    <div class="container mb-3">
+        <h2>Step 3:</h2>
+        <p>
+            Create an account, or if you already have one make sure to sign in successfully and complete all necassary steps.
+        </p>
+        <img src="{{ url_for('static', filename='tutorialImages/createSignup.png') }}" class="img-tut">
+    </div>
+
+    <div class="spacer"></div>
+
+    <div class="container mb-3">
+        <h2>Step 4:</h2>
+        <p>
+            Once you're in, direct your mouse to the top-right of the page and click the 'Account' icon. Once completed then press the 'Properties' text which will redirect you.
+        </p>
+        <img src="{{ url_for('static', filename='tutorialImages/properties.png') }}" class="img-tut">
+    </div>
+
+    <div class="spacer"></div>
+
+    <div class="container mb-3">
+        <h2>Step 5:</h2>
+        <p>
+            Now you are in the correct place, press the 'Energy Data' tab and follow these instructions;
+        </p>
+        <p>- First, use the 'refresh data' tool to ensure you have the latest information availiable</p>
+        <p>- Secondly, select the '30min' data granularity (MUST DO) this is necassary in order for our application to work properly.</p>
+        <p>- Finally, once previous steps have been completed select the 'download data' button which will store the file to your 'downloads' folder on your pc</p>
+        <img src="{{ url_for('static', filename='tutorialImages/energydatadownload.png') }}" class="img-tut">
+    </div>
+
+    <div class="spacer"></div>
+
+    <div class="container mb-3">
+        <h2>Step 6:</h2>
+        <p>
+           Now that you have successfully downloaded your data to your computer, it is simple to upload. Simply return to the <a href="/" class="text-success" style="font-weight: bold;">'Home'</a> Page of our application and our link will prompt you to enter the csv file you have just downloaded.
+        </p>
+    </div>
+</div>
+
+{% endblock %}
