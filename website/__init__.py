@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from os import path
@@ -69,3 +69,6 @@ def custom_datetime_format(datetime_str):
         return formatted_datetime
     except ValueError:
         return "Invalid Datetime"
+    
+def get_color():
+    return session.get('color', '#3498db')

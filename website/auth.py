@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, session
 from .models import User
 from werkzeug.security import generate_password_hash, check_password_hash
-from . import db
+from . import db, get_color
 from flask_login import login_user, login_required, logout_user, current_user
 from .models import CSVData
 
@@ -65,7 +65,7 @@ def sign_up():
     return render_template("sign-up.html")
 
 #CSV FUNCTIONS
-@auth.route('upload-csv', methods = ['POST'])
+@auth.route('/upload-csv', methods = ['POST'])
 def upload_csv():
     if 'csv_file' not in request.files:
         flash('No file to upload', category='error')
@@ -100,3 +100,16 @@ def upload_csv():
 
     flash('Successfully uploaded CSV', category='success')
     return redirect(url_for('views.home'))
+
+@auth.route('/preference-color-picker', methods=['GET','POST'])
+@login_required
+def pick_color():
+    if request.method == 'POST':
+        color = request.form.get('color')
+        if color:
+            session['color'] = color
+
+    
+    
+    color = get_color()
+    return redirect(url_for('views.preferences'))

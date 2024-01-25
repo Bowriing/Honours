@@ -14,4 +14,3 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(500))
     firstName = db.Column(db.String(150))
     csv_data = db.relationship('CSVData', uselist=False, backref='user')
-    
