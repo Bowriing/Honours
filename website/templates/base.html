@@ -29,7 +29,6 @@
                 {% if current_user.is_authenticated %}
                   <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
                   <a class="nav-item nav-link" id="home" href="/">Home</a>
-                  <a class="nav-item nav-link" style="color: var(--dynamic-color)">Hello, {{ current_user.firstName }}</a>
                   <a class="nav-item nav-link" id="preferences" href="/preferences">Preferences</a>
                 {% else %}
                   <a class="nav-item nav-link" id="login" href="/login">Login</a>
@@ -37,6 +36,17 @@
                 {% endif %}
               </div>
             </div>
+
+
+            <div class="navbar-user" style="display: flex; flex-direction: row;">
+              <a class="nav-item nav-link" style="color: white; padding-right: 0px!important;">Hello,</a>
+              {% if current_user.is_authenticated %}
+              <a class="nav-item nav-link" style="color: var(--dynamic-color); padding-left: 5px!important;" >{{ current_user.firstName }}</a>
+            </div>
+            {% else %}
+            <a class="nav-item nav-link" style="color: white; padding-left: 5px!important;" >You!</a>
+            </div>
+            {% endif %}
         </nav>
 
         {% with messages = get_flashed_messages(with_categories=true) %} {% if
