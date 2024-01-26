@@ -58,7 +58,7 @@
 
 .tile-bottom{
     display: flex;
-    background-color: rgb(158, 158, 158);
+    background-color: #212529;
     justify-content: center;
     align-items: center;
     height: 50px;
