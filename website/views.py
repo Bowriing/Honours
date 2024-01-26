@@ -16,7 +16,7 @@ def home():
 def preferences():
     return render_template("preferences.html")
 
-@views.route('/howto')
+@views.route('/howto', methods=['POST'])
 @login_required
 def howto():
     return render_template("howto.html")

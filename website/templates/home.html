@@ -4,61 +4,92 @@
 
 {%block content %}
 
-<div class="container" align=center>
-    <h1>Home Page</h1>
-    {% if csv_data %}
-    <h2>CSV Data</h2>
-    <div class="scrollable-table">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>kWh</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for row in csv_data.csv_content.split('\n')[1:] %}
-                {% if row.strip() != '' %}
-                <tr>
-                    {% for value in row.split(',') %}
-                    {% if loop.index in [2, 3] %}
-                    {% if loop.index == 2 %}
-                    <td>{{ value }}</td>
-                    {% else %}
-                    <td>{{ value|custom_datetime_format }}</td> 
-                    {% endif %}
-                    {% endif %}
-                    {% endfor %}
-                </tr>
-                {% endif %}
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    {% else %}
-    <p>No CSV data found.</p>
-    {% endif %}
+<div class="header-container">
+    <h1 class="page-header">Home</h1>
 </div>
 
-<div class="container mt-4" align="center">
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <form method="POST" enctype="multipart/form-data" action="/upload-csv" style="width: 300px;">
-                <div class="custom-file mb-2" style="display: flex;">
-                    <input type="file" class="custom-file-input" id="csv_file" name="csv_file" accept=".csv" required>
-                    <label class="custom-file-label" for="csv_file" style="text-align: left; overflow: hidden;">Choose CSV file...</label>
-                </div>
-                <div class="mb-2" style="display: flex; justify-content: space-evenly;">
-                    <button type="submit" class="btn btn-dark" style="width: 125px;">Upload CSV</button>
-                </div>
-            </form>
-            <form method="POST" enctype="multipart/form-data" action="/delete-csv">
-                <button type="submit" class="btn btn-dark" style="width: 125px;">Delete CSV</button>
-            </form>
-            <a href="/howto" class="text-success" style="font-size: 12px;">Need help getting data?</a>
-
+<div class="flex-tile-con">
+    <div class="tile" style="flex: 1;">
+        <h2 class="tile-title text-dark">Recomendations</h2>
+        <div class="tile-content" style="flex-direction: column;">
+            <p class="text-dark">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, nam. Sapiente ea nostrum at </p>
+            <p class="text-dark">fuga doloribus amet distinctio deleniti, sint eligendi dolores magnam perspiciatis sed aliquid architecto eveniet, inventore nulla?</p>
+        </div>
+        <div class="tile-bottom">
         </div>
     </div>
+
+    <div class="tile" style="flex: 1;">
+        <h2 class="tile-title text-dark">Device Usage (Estimate)</h2>
+        <div class="tile-content" style="flex-direction: column;">
+            <p class="text-dark">Device: 0.00kWh</p>
+            <p class="text-dark">Device: 0.00kWh</p>
+            <p class="text-dark">Device: 0.00kWh</p>
+            <p class="text-dark">Device: 0.00kWh</p>
+            <p class="text-dark">Device: 0.00kWh</p>
+            <p class="text-dark">Device: 0.00kWh</p>
+        </div>
+        <div class="tile-bottom">
+        </div>
+    </div>
+
+    <div class="tile" style="flex: 2;">
+        <h2 class="tile-title text-dark">CSV Data</h2>
+
+        <div class="tile-content">
+            {% if csv_data %}
+            <div class="scrollable-table" style="height: 475px; width: 700px;">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>kWh</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in csv_data.csv_content.split('\n')[1:] %}
+                        {% if row.strip() != '' %}
+                        <tr>
+                            {% for value in row.split(',') %}
+                            {% if loop.index in [2, 3] %}
+                            {% if loop.index == 2 %}
+                            <td>{{ value }}</td>
+                            {% else %}
+                            <td>{{ value|custom_datetime_format }}</td> 
+                            {% endif %}
+                            {% endif %}
+                            {% endfor %}
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="text-dark">No CSV data found.</p>
+            {% endif %}
+            </div>
+        
+            <div class="tile-bottom" style="justify-content: space-evenly;">
+                <div class="tile-bottom-container" style="display: flex; justify-content: space-evenly; width: 100%;">
+                    <label for="csv_file" class="btn btn-dark" style="margin: 0!important;">Choose CSV</label>
+                    <form method="POST" enctype="multipart/form-data" action="/upload-csv">
+                        <input class="file-upload" type="file" id="csv_file" name="csv_file" accept=".csv" required>
+                        <button type="submit" class="btn btn-dark">Upload CSV</button>
+                    </form>
+                    
+                    <form method="POST" action="/delete-csv">
+                        <button type="submit" class="btn btn-dark">Delete CSV</button>
+                    </form>
+                    
+                    <form method="POST" action="/howto">
+                        <button class="btn btn-dark">Help</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div> 
 </div>
+
 {% endblock %}
 
