@@ -9,7 +9,7 @@
       <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
       <style>
         :root{
-         --dynamic-color: {{ session['color'] | default('#222222', true) }};
+         --dynamic-color: {{ session['color']}};
         }
       </style>
       {%block scripts%} {%endblock%}
@@ -38,7 +38,7 @@
           <div class="navbar-user" style="display: flex; flex-direction: row;">
             <a class="nav-item nav-link" style="color: white; padding-right: 0px!important;">Hello,</a>
           {% if current_user.is_authenticated %}
-            <a class="nav-item nav-link" style="color: var(--dynamic-color, white); padding-left: 5px!important;" >{{ current_user.firstName }}</a>
+            <a class="nav-item nav-link" style="color: var(--dynamic-color, white); padding-left: 5px!important; font-weight: bold;" >{{ current_user.firstName }}</a>
           </div>
           {% else %}
             <a class="nav-item nav-link" style="color: white; padding-left: 5px!important;" >You!</a>
