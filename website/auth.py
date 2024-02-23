@@ -97,7 +97,6 @@ def upload_csv():
     #upload changes/updates to the sql database
     db.session.commit()
 
-
     flash('Successfully uploaded CSV', category='success')
     return redirect(url_for('views.home'))
 

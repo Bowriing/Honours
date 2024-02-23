@@ -54,6 +54,7 @@
     display: flex;
     padding: 10px;
     height: 490px;
+    align-items: center;
 }
 
 .tile-bottom{

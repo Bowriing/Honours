@@ -14,3 +14,8 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(500))
     firstName = db.Column(db.String(150))
     csv_data = db.relationship('CSVData', uselist=False, backref='user')
+
+#class Device(db.Model):
+    #id = db.Column(db.Integer, primary_key=True)
+    #powerRating = db.Column(db.Integer)
+    #deviceName = db.Column(db.String(150), unique=True)

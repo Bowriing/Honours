@@ -21,4 +21,9 @@ def preferences():
 def howto():
     return render_template("howto.html")
 
+@views.route('/getUserData')
+@login_required
+def getUserData():
+    return render_template("getUserData.html")
+
 

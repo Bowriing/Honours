@@ -1,0 +1,59 @@
+{% extends "base.html"%}
+{% block title %} Home {% endblock %}
+{%block scripts%}{%endblock%}
+
+{%block content %}
+<div class="header-container">
+    <h1 class="page-header">Add Device Information</h1>
+</div>
+
+<div class="flex-tile-con">
+    <div class="tile" style="flex: 1;">
+        <h2 class="tile-title text-dark">Add New Devices</h2>
+        <div class="tile-content" style="flex-direction: column;">
+            <form method="POST" style="width: 500px;" align="center">
+                <div class="form-group">
+                    <label for="deviceType">Device</label>
+                    <select name="deviceType" id="deviceType" class="form-control" placeholder="Select Device Type">
+                        <option value="fridge">Fridge</option>
+                        <option value="kettle">Kettle</option>
+                        <option value="microwave">Microwave</option>
+                        <option value="oven">Oven</option>
+                        <option value="tv">TV</option>
+                        <option value="computer">Computer</option>
+                    </select>
+                </div>
+            
+                <div class="form-group">
+                    <label for="powerRating">Power Rating</label>
+                    <input type="number" class="form-control" id="powerRating" name="powerRating" placeholder="Enter Power Rating of Device">
+                </div>
+            
+                <br />
+        
+                <div class="form-button" align="center">
+                    <button type="submit" class="btn btn-dark" style="width: 100px;">Login</button>
+                </div>
+            </form>
+        </div>
+        <div class="tile-bottom">
+            <div class="tile-bottom-container" style="display: flex; justify-content: space-evenly; width: 100%;">
+                <button type="submit" class="btn btn-dark">Add Device</button>
+                <button type="submit" class="btn btn-dark">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="tile" style="flex: 1;">
+        <h2 class="tile-title text-dark">Current Devices</h2>
+        <div class="tile-content" style="flex-direction: column;"></div>
+        <div class="tile-bottom">
+            <div class="tile-bottom-container" style="display: flex; justify-content: space-evenly; width: 100%;">
+                <button class="btn btn-dark">Edit Device</button>
+                <button class="btn btn-dark">Delete Device</button>
+            </div>
+        </div>
+    </div>
+    
+</div>
+{% endblock %}
