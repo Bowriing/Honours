@@ -11,6 +11,11 @@
     <div class="tile" style="flex: 1;">
         <h2 class="tile-title text-dark">Add New Devices</h2>
         <div class="tile-content" style="flex-direction: column;">
+
+            #make this form action /upload deviceType and powerRating
+            #uploads one device at a time to a db model with ID type and Rating
+            #create model in models.py
+            #append the new device from form into db
             <form method="POST" style="width: 500px;" align="center">
                 <div class="form-group">
                     <label for="deviceType">Device</label>
@@ -46,6 +51,12 @@
 
     <div class="tile" style="flex: 1;">
         <h2 class="tile-title text-dark">Current Devices</h2>
+        #in content need a GET request to get data from db model for devices
+        #get deviceName powerRating and ID 
+        #only display deviceName
+        #the edit button allows devices name and powerRating to be changed NOT type 
+        #must remove device to change type
+        #remove button gets the device ID search through the DB and removes all fields of associated device
         <div class="tile-content" style="flex-direction: column;"></div>
         <div class="tile-bottom">
             <div class="tile-bottom-container" style="display: flex; justify-content: space-evenly; width: 100%;">
