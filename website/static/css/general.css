@@ -79,3 +79,7 @@
     width: 125px;
     max-width: 125px;
 }
+
+.flash-message{
+    position: absolute;
+}

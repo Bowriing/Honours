@@ -132,14 +132,22 @@ def add_device():
         deviceName = request.form.get('deviceName')
         deviceType = request.form.get('deviceType')
         powerRating = request.form.get('powerRating')
+        
+        if not deviceName:
+            flash('Device name is required.', category='error')
+        elif not deviceType or deviceType == "Select...":
+            flash('Device type is required.', category='error')
+        elif not powerRating:
+            flash('Power rating is required.', category='error')
 
-        new_device = Device(deviceName = deviceName, deviceType = deviceType, powerRating = powerRating, user_id = current_user.id)
-        db.session.add(new_device)
-        current_user.devices.append(new_device)
+        else:
+            new_device = Device(deviceName = deviceName, deviceType = deviceType, powerRating = powerRating, user_id = current_user.id)
+            db.session.add(new_device)
+            current_user.devices.append(new_device)
+            flash('Device Successfully Added.', category='success')
 
         db.session.commit()
 
-        flash('Device Successfully Added.', category='success')
     
     return redirect(url_for('views.getUserData'))
         
