@@ -24,6 +24,7 @@ def howto():
 @views.route('/getUserData')
 @login_required
 def getUserData():
-    return render_template("getUserData.html")
+    devices = current_user.devices
+    return render_template("getUserData.html", devices=devices) #pass in devies to load any existing devices from user
 
 

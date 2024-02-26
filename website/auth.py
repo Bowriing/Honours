@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, session
-from .models import User
+from .models import User, Device
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db, get_color
 from flask_login import login_user, login_required, logout_user, current_user
@@ -121,8 +121,26 @@ def pick_color():
         color = request.form.get('color')
         if color:
             session['color'] = color
-
-    
-    
+   
     color = get_color()
     return redirect(url_for('views.preferences'))
+
+@auth.route('/add-device', methods=['GET','POST'])
+@login_required
+def add_device():
+    if request.method == 'POST':
+        deviceName = request.form.get('deviceName')
+        deviceType = request.form.get('deviceType')
+        powerRating = request.form.get('powerRating')
+
+        new_device = Device(deviceName = deviceName, deviceType = deviceType, powerRating = powerRating, user_id = current_user.id)
+        db.session.add(new_device)
+        current_user.devices.append(new_device)
+
+        db.session.commit()
+
+        flash('Device Successfully Added.', category='success')
+    
+    return redirect(url_for('views.getUserData'))
+        
+

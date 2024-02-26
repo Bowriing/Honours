@@ -14,12 +14,18 @@
             
             <!--#make this form action /upload deviceType and powerRating
             #uploads one device at a time to a db model with ID type and Rating
-            #create model in models.py-->
-            #append the new device from form into db
-            <form method="POST" style="width: 500px;" align="center">
+            #create model in models.py
+            #append the new device from form into db-->
+
+            <form method="POST" action="/add-device" style="width: 500px;" align="center">
                 <div class="form-group">
+
+                    <label for="deviceName">Device Name</label>
+                    <input type="text" class="form-control" id="deviceName" name="deviceName" placeholder="Enter Name of Device">
+
                     <label for="deviceType">Device</label>
                     <select name="deviceType" id="deviceType" class="form-control" placeholder="Select Device Type">
+                        <option value="Select..." id="none">Select...</option>
                         <option value="fridge">Fridge</option>
                         <option value="kettle">Kettle</option>
                         <option value="microwave">Microwave</option>
@@ -27,24 +33,24 @@
                         <option value="tv">TV</option>
                         <option value="computer">Computer</option>
                     </select>
-                </div>
-            
-                <div class="form-group">
-                    <label for="powerRating">Power Rating</label>
-                    <input type="number" class="form-control" id="powerRating" name="powerRating" placeholder="Enter Power Rating of Device">
-                </div>
-            
-                <br />
-        
-                <div class="form-button" align="center">
-                    <button type="submit" class="btn btn-dark" style="width: 100px;">Add</button>
+
+                    <div class="form-group">
+                        <label for="powerRating">Power Rating (Watts)</label>
+                        <input type="number" class="form-control" id="powerRating" name="powerRating" placeholder="Enter Power Rating of Device">
+                    </div>
+
+                    <br />
+
+                    <div class="form-button" align="center">
+                        <button type="submit" class="btn btn-dark" style="width: 100px;">Add</button>
+                    </div>
                 </div>
             </form>
         </div>
+
         <div class="tile-bottom">
             <div class="tile-bottom-container" style="display: flex; justify-content: space-evenly; width: 100%;">
-                <button type="submit" class="btn btn-dark">Add Device</button>
-                <button type="submit" class="btn btn-dark">Confirm</button>
+
             </div>
         </div>
     </div>
@@ -52,7 +58,7 @@
     <!--
     #in content need a GET request to get data from db model for devices
     #get deviceName powerRating and ID 
-    #only display deviceName
+    #only display deviceName and poweRatingh
     #the edit button allows devices name and powerRating to be changed NOT type 
     #must remove device to change type
     #remove button gets the device ID search through the DB and removes all fields of associated device
@@ -61,7 +67,32 @@
     <div class="tile" style="flex: 1;">
         <h2 class="tile-title text-dark">Current Devices</h2>
 
-        <div class="tile-content" style="flex-direction: column;"></div>
+        <div class="tile-content" style="flex-direction: column;">
+            <div class="scrollable-table" style="height: 475px; width: 100%;">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Device Name</th>
+                            <th>Type</th>
+                            <th>Power Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for device in devices %}
+                        <tr>
+                            <td>{{ device.deviceName }}</td>
+                            <td>{{ device.deviceType }}</td>
+                            <td>{{ device.powerRating }}</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="3">No devices added yet.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
         <div class="tile-bottom">
             <div class="tile-bottom-container" style="display: flex; justify-content: space-evenly; width: 100%;">
                 <button class="btn btn-dark">Edit Device</button>

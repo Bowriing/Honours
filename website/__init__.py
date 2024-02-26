@@ -71,4 +71,4 @@ def custom_datetime_format(datetime_str):
         return "Invalid Datetime"
     
 def get_color():
-    return session.get('color', '#3498db')
+    return session.get('color', '#FFFFFF')

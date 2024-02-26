@@ -14,8 +14,13 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(500))
     firstName = db.Column(db.String(150))
     csv_data = db.relationship('CSVData', uselist=False, backref='user')
+    devices = db.relationship('Device', backref='user')
+    custom_color = db.Column(db.String(7), nullable=True) #HEX Color Code
 
-#class Device(db.Model):
-    #id = db.Column(db.Integer, primary_key=True)
-    #powerRating = db.Column(db.Integer)
-    #deviceName = db.Column(db.String(150), unique=True)
+class Device(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    deviceName = db.Column(db.String(150))
+    deviceType = db.Column(db.String(50))
+    powerRating = db.Column(db.Integer)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    
