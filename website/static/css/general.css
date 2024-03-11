@@ -1,3 +1,7 @@
+:root{
+    --dynamic-color: white;
+}
+
 .scrollable-table {
     overflow-y: auto;
     height: 500px;
@@ -48,6 +52,7 @@
     align-items: center;
     height: 50px;
     font-size: 20px;
+    overflow: hidden;
 }
 
 .tile-content{

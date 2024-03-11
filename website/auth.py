@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, session
 from .models import User, Device
 from werkzeug.security import generate_password_hash, check_password_hash
-from . import db, get_color
+from . import db
 from flask_login import login_user, login_required, logout_user, current_user
 from .models import CSVData
 
@@ -113,17 +113,6 @@ def delete_csv():
 
     return redirect(url_for('views.home'))
 
-
-@auth.route('/preference-color-picker', methods=['GET','POST'])
-@login_required
-def pick_color():
-    if request.method == 'POST':
-        color = request.form.get('color')
-        if color:
-            session['color'] = color
-   
-    color = get_color()
-    return redirect(url_for('views.preferences'))
 
 @auth.route('/add-device', methods=['GET','POST'])
 @login_required
