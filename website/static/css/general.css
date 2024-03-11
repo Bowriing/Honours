@@ -88,3 +88,12 @@
 .flash-message{
     position: absolute;
 }
+
+::-webkit-scrollbar {
+    width: 10px; /* Width of the entire scrollbar */
+}
+  
+::-webkit-scrollbar-thumb:hover {
+    background-color: #212529;
+    border-radius: 10px;
+}
