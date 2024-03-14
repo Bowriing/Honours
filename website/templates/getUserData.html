@@ -96,6 +96,9 @@
                             <th>Device Name</th>
                             <th>Type</th>
                             <th>Power Rating</th>
+                            <th>Constant?</th>
+                            <th>sAge</th>
+                            <th>Zones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -104,6 +107,9 @@
                             <td>{{ device.deviceName }}</td>
                             <td>{{ device.deviceType }}</td>
                             <td>{{ device.powerRating }}</td>
+                            <td>{{ device.constantDevice }}</td>
+                            <td>{{ device.deviceAge }}</td>
+                            <td>{{ device.timeZones }}</td>
                         </tr>
                         {% else %}
                         <tr>

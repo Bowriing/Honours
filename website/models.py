@@ -15,12 +15,14 @@ class User(db.Model, UserMixin):
     firstName = db.Column(db.String(150))
     csv_data = db.relationship('CSVData', uselist=False, backref='user')
     devices = db.relationship('Device', backref='user')
-    custom_color = db.Column(db.String(7), nullable=True) #HEX Color Code
 
 class Device(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     deviceName = db.Column(db.String(150))
     deviceType = db.Column(db.String(50))
     powerRating = db.Column(db.Integer)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    constantDevice = db.Column(db.String(10))
+    deviceAge = db.Column(db.Integer)
+    timeZones = db.Column(db.JSON)
     
