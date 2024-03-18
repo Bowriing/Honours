@@ -13,7 +13,12 @@
     <div class="tile" style="flex: 2;">
         <h2 class="tile-title text-dark">Estimations</h2>
         <div class="tile-content" style="flex-direction: column;">
-
+            {% if processingOutput %}
+                {% for string in processingOutput.split('\n') %}
+                <p>{%print(string)%}</p>
+                {% endfor %}
+            {% endif %}
+ 
         </div>
         <div class="tile-bottom">
             <form method="POST" action="/run-processing">

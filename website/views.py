@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for
 from flask_login import login_required, current_user
+from .processing import processingMain
 
 
 views = Blueprint('views', __name__)
@@ -9,7 +10,8 @@ views = Blueprint('views', __name__)
 def home():
     #retrieve the csv data if any from user
     csv_data = current_user.csv_data
-    return render_template("home.html", csv_data=csv_data)
+    processingOutput = processingMain()
+    return render_template("home.html", csv_data=csv_data, processingOutput = processingOutput)
 
 @views.route('/preferences')
 @login_required

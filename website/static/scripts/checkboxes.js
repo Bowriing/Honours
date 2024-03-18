@@ -14,4 +14,30 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
+
+    document.getElementById('deviceConstant').addEventListener('change', function() {
+        var checkboxes = document.querySelectorAll('input[name="deviceTimezone"]');
+
+        if (this.value === 'yes') {
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = true;
+                document.getElementById('randomZone').checked = false;
+            });
+        }
+
+        else if (this.value === 'no') {
+            checkboxes.forEach(function(checkbox){
+                checkbox.checked = false;
+            })
+        }
+
+    });
+
+    document.getElementById('add_device_button').addEventListener('click', function() {
+        document.getElementById('add_form').submit()
+    });
+    
 });
+
+
+

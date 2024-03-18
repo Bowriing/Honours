@@ -12,14 +12,26 @@
         <h2 class="tile-title text-dark">Add New Devices</h2>
         <div class="tile-content" style="flex-direction: column;">
 
-            <form method="POST" action="/add-device" style="width: 500px; overflow-y: scroll;" align="center">
+            <form method="POST" action="/add-device" style="width: 500px; overflow-y: scroll;" align="center" id="add_form">
                 <div class="form-group">
 
                     <label for="deviceName">Device Name</label>
                     <input type="text" class="form-control" id="deviceName" name="deviceName" placeholder="Enter Name of Device">
 
                     <label for="deviceType">Device Type</label>
-                    <input type="text" class="form-control" id="deviceType" name="deviceType" placeholder="Enter Type of Device">
+                    <select class="form-control" id="deviceType" name="deviceType" placeholder="Please Select Type of Device">
+                        <option value="" disabled selected hidden>Please Select Type of Device</option>
+                        <option value="kettle">Kettle</option>
+                        <option value="fridge">fridge</option>
+                        <option value="computer">Computer / PC</option>
+                        <option value="hob">Electric Hob</option>
+                        <option value="airfryer">Air Fryer</option>
+                        <option value="tv">Television</option>
+                        <option value="ev_car_charge">EV / Car Charger</option>
+                        <option value="microwave">Microwave</option>
+                        <option value="led_lights">LED Lighting</option>
+                    </select>
+
 
                     <label for="powerRating">Power Rating (Watts)</label>
                     <input type="number" class="form-control" id="powerRating" name="powerRating" placeholder="Enter Device Wattage">
@@ -62,16 +74,14 @@
 
                     <br />
 
-                    <div class="form-button" align="center">
-                        <button type="submit" class="btn btn-dark" style="width: 100px;">Add</button>
-                    </div>
+                    
                 </div>
             </form>
         </div>
 
         <div class="tile-bottom">
             <div class="tile-bottom-container" style="display: flex; justify-content: space-evenly; width: 100%;">
-
+                <button class="btn btn-dark" id="add_device_button">Add Device</button>
             </div>
         </div>
     </div>
