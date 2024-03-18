@@ -6,22 +6,35 @@ class CsvLog:
         self.datetime = pdateTime
 
 def processingMain():
-    timeFilter()
+    logInstance = getCsvLog()
+    print ("Datetime: " + logInstance.datetime)
+    print ("kWh Usage: " + logInstance.kwh + "kWh")
+    wattUsage = kwhToWatts(logInstance.kwh)
+    print (wattUsage)
 
-def timeFilter():
-    devices = current_user.devices
+
+
+def getCsvLog():
     csvData = current_user.csv_data.csv_content
     csvRow = [] 
 
     for row in csvData.split('\n')[1:]:
-        csvRow.append(row)
+        csvRow.append(row)  
 
     csvItem = csvRow[0]
     csvItemSplit = csvItem.split(',')
 
     newLog = CsvLog(csvItemSplit[1], csvItemSplit[2])
-    
-    print(newLog.datetime)
+
+    return newLog
+
+def kwhToWatts(pKwh):
+    kwh = float(pKwh)
+    watts = kwh * 1000
+    watts = (watts/0.5)
+
+    return watts
 
 
-
+def timeFilter():
+    return
