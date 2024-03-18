@@ -11,9 +11,12 @@ def processingMain():
         logInstance = getCsvLog()
         print ("Datetime: " + logInstance.datetime)
         print ("kWh Usage: " + logInstance.kwh + "kWh")
-        wattUsage = kwhToWatts(logInstance.kwh)
-        print (wattUsage)
+        watts = kwhToWatts(logInstance.kwh)
+        print (watts)
         print ("Successfully outputted wattUsage")
+
+        output = informativeOutput(logInstance.kwh, watts, logInstance.datetime)
+        print (output)
 
     elif not hasattr(current_user.csv_data, 'csv_content'):
         flash('No CSV Content to read.', category='error')
@@ -38,6 +41,18 @@ def kwhToWatts(pKwh):
     watts = (watts/0.5)
 
     return watts
+
+def informativeOutput(pKwh, pWatts, pDateTime):
+    kwh = float(pKwh)
+    watts = pWatts
+    wattHours = (kwh * 1000)
+    dt = pDateTime
+
+    print("For the 30 min interval concluding on " + dt)
+    print("Your total kWh usage was: " + str(kwh) + "kWh")
+    print("This means your total wH (watt hour) usage was: " + str(watts) + "wH")
+    print("Therefore in total, you used " + str(wattHours) + " Watts")
+
 
 
 def timeFilter():
