@@ -6,10 +6,29 @@ class CsvLog:
         self.kwh = pkwh
         self.datetime = pdateTime
 
+class Device:
+    def __init__(self, deviceType, powerRating, constant, age, timeZones):
+        self.deviceType = deviceType
+        self.powerRating = powerRating
+        self.constant = constant
+        self.age = age
+        self.timeZones = timeZones
+
 def processingMain():
     if hasattr(current_user.csv_data, 'csv_content'):
         #get interval (line) of csv and put into object
         logInstance = getCsvLog()
+
+        devices = []
+        filteredDevices = [] 
+
+        for device in current_user.devices:
+            deviceObj = Device(device.deviceType, device.powerRating, device.constantDevice, device.deviceAge, device.timeZones)
+            devices.append(deviceObj)
+
+            if 'morning' in device.timeZones:
+                filteredDevices.append(device.deviceType)
+                print("Added device to filtered device list")
 
         dt = logInstance.datetime
         kwh = float(logInstance.kwh)
@@ -19,8 +38,10 @@ def processingMain():
         cost  = costConverter(kwh)
 
         #method which is uploaded to the home render template for user to see information
-        output = generate_report(dt, kwh, watts, wh, cost)
-        print (output)
+        output = generate_report(dt, kwh, watts, wh, cost, filteredDevices)
+
+        ZoneFilter(dt)
+
         return (output)
 
     elif not hasattr(current_user.csv_data, 'csv_content'):
@@ -42,12 +63,13 @@ def getCsvLog():
 
 
 #generates the output to the home page
-def generate_report(dt, kwh, watts, wattHours, cost):
+def generate_report(dt, kwh, watts, wattHours, cost, devices):
     report = "For the 30 min interval concluding on " + str(dt) + "\n"
     report += "Your total kWh usage was: " + str(kwh) + " kWh\n"
     report += "This means your total wH (watt hour) usage was: " + str(wattHours) + " wH\n"
     report += "Therefore in total, you used " + str(watts) + " Watts\n"
-    report += "The total cost for this interval was £" + str(cost)
+    report += "The total cost for this interval was £" + str(cost) + "\n"
+    report += "Possible devices used in this interval: " + str(devices)
     
     return report
 
@@ -58,7 +80,9 @@ def costConverter(kWh):
 
     return cost
 
+def ZoneFilter(dateTime):
+    splitTime = dateTime.split('T')
+    gamer = splitTime[1]
 
-def timeFilter():
-    #to be made
-    return
+    splitgamer = gamer[:5]
+    print(splitgamer)
