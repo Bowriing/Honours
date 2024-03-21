@@ -1,5 +1,7 @@
 from flask_login import current_user
 from flask import flash
+from datetime import datetime
+from .filters import ZoneFilter
 
 class CsvLog:
     def __init__(self, pkwh, pdateTime):
@@ -7,7 +9,8 @@ class CsvLog:
         self.datetime = pdateTime
 
 class Device:
-    def __init__(self, deviceType, powerRating, constant, age, timeZones):
+    def __init__(self, deviceName, deviceType, powerRating, constant, age, timeZones):
+        self.name = deviceName
         self.deviceType = deviceType
         self.powerRating = powerRating
         self.constant = constant
@@ -19,28 +22,30 @@ def processingMain():
         #get interval (line) of csv and put into object
         logInstance = getCsvLog()
 
+        #list of all users devices as device obj
         devices = []
-        filteredDevices = [] 
 
+        #list of devices after filtration has processed
+        filteredDevices = []
+
+        #create device objects from current_user device list
         for device in current_user.devices:
-            deviceObj = Device(device.deviceType, device.powerRating, device.constantDevice, device.deviceAge, device.timeZones)
+            deviceObj = Device(device.deviceName, device.deviceType, device.powerRating, device.constantDevice, device.deviceAge, device.timeZones)
             devices.append(deviceObj)
 
-            if 'morning' in device.timeZones:
-                filteredDevices.append(device.deviceType)
-                print("Added device to filtered device list")
+        #run zone filter which returns a filtered devices list and append to filtered devices
+        filteredDevices = ZoneFilter(devices)
 
         dt = logInstance.datetime
         kwh = float(logInstance.kwh)
         wh = (kwh*1000)
-        whFloat = float(wh)
-        watts = (whFloat*0.5)
         cost  = costConverter(kwh)
 
-        #method which is uploaded to the home render template for user to see information
-        output = generate_report(dt, kwh, watts, wh, cost, filteredDevices)
+        #get custom datetime format
+        output_dt= format_dt_output(dt)
 
-        ZoneFilter(dt)
+        #method which is uploaded to the home render template for user to see information
+        output = generate_report(output_dt, kwh, wh, cost, filteredDevices)
 
         return (output)
 
@@ -53,25 +58,13 @@ def processingMain():
 def getCsvLog():
     csvData = current_user.csv_data.csv_content
     csvRow = [] 
-    for row in csvData.split('\n')[1:]:
+    for row in csvData.split('\n')[50:]:
         csvRow.append(row)  
     csvItem = csvRow[0]
     csvItemSplit = csvItem.split(',')
     newLog = CsvLog(csvItemSplit[1], csvItemSplit[2])
 
     return newLog
-
-
-#generates the output to the home page
-def generate_report(dt, kwh, watts, wattHours, cost, devices):
-    report = "For the 30 min interval concluding on " + str(dt) + "\n"
-    report += "Your total kWh usage was: " + str(kwh) + " kWh\n"
-    report += "This means your total wH (watt hour) usage was: " + str(wattHours) + " wH\n"
-    report += "Therefore in total, you used " + str(watts) + " Watts\n"
-    report += "The total cost for this interval was £" + str(cost) + "\n"
-    report += "Possible devices used in this interval: " + str(devices)
-    
-    return report
 
 #return a decimal which figures out cost of the 30min interval based of a cost taken from public website been referenced in doc 
 def costConverter(kWh):
@@ -80,9 +73,26 @@ def costConverter(kWh):
 
     return cost
 
-def ZoneFilter(dateTime):
-    splitTime = dateTime.split('T')
-    gamer = splitTime[1]
+def format_dt_output(dt):
+    timestamp = dt
+    datetime_obj = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%fZ")
+    formatted_time = datetime_obj.strftime("%I:%M%p st %B %Y")
 
-    splitgamer = gamer[:5]
-    print(splitgamer)
+    day = datetime_obj.day
+    if 4 <= day <= 20 or 24 <= day <= 30:
+        suffix = "th"
+    else:
+        suffix = ["st", "nd", "rd"][day % 10 - 1]
+    formatted_time = formatted_time.replace("st", str(day) + suffix)
+
+    return formatted_time
+
+#generates the output to the home page
+def generate_report(dt, kwh, wattHours, cost, devices):
+    report = "Interval Conluding: " + dt + "\n"
+    report += "kWh Usage: " + str(kwh) + " kWh\n"
+    report += "Wh Usage: " + str(wattHours) + " wH\n"
+    report += "Cost: £" + str(cost) + "\n"
+    report += "Possible Devices Used: " + ", ".join(devices)
+    
+    return report

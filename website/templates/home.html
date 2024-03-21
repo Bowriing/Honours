@@ -42,20 +42,23 @@
                     </thead>
                     <tbody>
                         {% for row in csv_data.csv_content.split('\n')[1:] %}
-                        {% if row.strip() != '' %}
-                        <tr>
-                            {% for value in row.split(',') %}
-                            {% if loop.index in [2, 3] %}
-                            {% if loop.index == 2 %}
-                            <td>{{ value }}</td>
-                            {% else %}
-                            <td>{{ value|custom_datetime_format }}</td> 
+                        {% if loop.index <= 100 %}
+                            {% if row.strip() != '' %}
+                                <tr>
+                                    {% for value in row.split(',') %}
+                                        {% if loop.index in [2, 3] %}
+                                            {% if loop.index == 2 %}
+                                                <td>{{ value }}</td>
+                                            {% else %}
+                                                <td>{{ value|custom_datetime_format }}</td> 
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </tr>
                             {% endif %}
-                            {% endif %}
-                            {% endfor %}
-                        </tr>
+                        {% else %}
                         {% endif %}
-                        {% endfor %}
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
