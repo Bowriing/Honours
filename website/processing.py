@@ -18,41 +18,45 @@ class Device:
         self.timeZones = timeZones
 
 def processingMain():
-    if hasattr(current_user.csv_data, 'csv_content'):
-        #get interval (line) of csv and put into object
-        logInstance = getCsvLog()
-
-        #list of all users devices as device obj
-        devices = []
-
-        #list of devices after filtration has processed
-        filteredDevices = []
-
-        #create device objects from current_user device list
-        for device in current_user.devices:
-            deviceObj = Device(device.deviceName, device.deviceType, device.powerRating, device.constantDevice, device.deviceAge, device.timeZones)
-            devices.append(deviceObj)
-
-        #run zone filter which returns a filtered devices list and append to filtered devices
-        filteredDevices = ZoneFilter(devices)
-
-        dt = logInstance.datetime
-        kwh = float(logInstance.kwh)
-        wh = (kwh*1000)
-        cost  = costConverter(kwh)
-
-        #get custom datetime format
-        output_dt= format_dt_output(dt)
-
-        #method which is uploaded to the home render template for user to see information
-        output = generate_report(output_dt, kwh, wh, cost, filteredDevices)
-
-        return (output)
-
-    elif not hasattr(current_user.csv_data, 'csv_content'):
+    if not hasattr(current_user.csv_data, 'csv_content'):
         flash('No CSV Content to read.', category='error')
         print ("User's CSV Content Is Empty")
-        return ("No CSV to process")
+        return
+    
+    #get interval (line) of csv and put into object
+    logInstance = getCsvLog()
+
+    #list of all users devices as device obj
+    device_object_list = []
+
+    #list of devices after filtration has processed
+    filteredDevices = []
+
+    #create device objects from current_user device list
+    for device in current_user.devices:
+        deviceObj = Device(device.deviceName, device.deviceType, device.powerRating, device.constantDevice, device.deviceAge, device.timeZones)
+        device_object_list.append(deviceObj)
+
+    #run zone filter which returns a filtered devices list and append to filtered devices
+    filteredDevices = ZoneFilter(device_object_list)
+    print(filteredDevices)
+
+    dt = logInstance.datetime
+    kwh = float(logInstance.kwh)
+    wh = (kwh*1000)
+    cost  = costConverter(kwh)
+
+    #get custom datetime format
+    output_dt= format_dt_output(dt)
+
+    #method which is uploaded to the home render template for user to see information
+    #output = generate_report(output_dt, kwh, wh, cost, filteredDevices)
+
+    output = filteredDevices
+
+    return (output)
+
+    
 
 
 def getCsvLog():
@@ -93,6 +97,10 @@ def generate_report(dt, kwh, wattHours, cost, devices):
     report += "kWh Usage: " + str(kwh) + " kWh\n"
     report += "Wh Usage: " + str(wattHours) + " wH\n"
     report += "Cost: £" + str(cost) + "\n"
-    report += "Possible Devices Used: " + ", ".join(devices)
+    report += "Possible Devices Used: \n" + "\n".join(map(test, devices))
     
     return report
+
+#mapping function for outputting device name and type in generate_report def
+def test(device):
+    return device.name + " : " +  device.deviceType

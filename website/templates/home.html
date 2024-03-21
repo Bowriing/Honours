@@ -14,8 +14,15 @@
         <h2 class="tile-title text-dark">Estimations</h2>
         <div class="tile-content" style="flex-direction: column;">
             {% if processingOutput %}
-                {% for string in processingOutput.split('\n') %}
-                <p>{%print(string)%}</p>
+                {% for device in processingOutput %}
+                <div class="device_output_box">
+                    <div class="device_output_name">
+                        Name: {% print (device.name) %}
+                    </div>
+                    <div class="device_output_type">
+                       Device: {% print (device.deviceType) %}
+                    </div>
+                </div>
                 {% endfor %}
             {% endif %}
  

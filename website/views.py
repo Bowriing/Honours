@@ -10,8 +10,9 @@ views = Blueprint('views', __name__)
 def home():
     #retrieve the csv data if any from user
     csv_data = current_user.csv_data
-    processingOutput = processingMain()
-    return render_template("home.html", csv_data=csv_data, processingOutput = processingOutput)
+    deviceOutput = processingMain()
+
+    return render_template("home.html", csv_data=csv_data, processingOutput = deviceOutput)
 
 @views.route('/preferences')
 @login_required

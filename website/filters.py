@@ -6,7 +6,7 @@ def ZoneFilter(devices):
 
     for device in devices:
         if 'morning' in device.timeZones:
-            return_devices.append(device.name + device.deviceType)
+            return_devices.append(device)
             print("Added device to filtered device list")
 
     return return_devices
