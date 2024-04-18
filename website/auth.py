@@ -158,3 +158,12 @@ def runProcessing():
     processingMain()
 
     return redirect(url_for('views.home'))
+
+@auth.route('/delete-device', methods=['POST'])
+@login_required
+def deleteDevice():
+    data = request.json
+    device_name = data.__getattribute__('device_name')
+
+    print(device_name)
+    flash('Device Successfully Deleted.', category='success')

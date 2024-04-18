@@ -1,6 +1,9 @@
 {% extends "base.html"%}
 {% block title %} Home {% endblock %}
-{%block scripts%}<script src="{{ url_for('static', filename='scripts/checkboxes.js') }}"></script>{%endblock%}
+{%block scripts%}
+<script src="{{ url_for('static', filename='scripts/checkboxes.js') }}"></script>
+<script src="{{ url_for('static', filename='scripts/deviceInteractions.js') }}"></script>
+{%endblock%}
 
 {%block content %}
 <div class="header-container">
@@ -27,7 +30,7 @@
                         <option value="hob">Electric Hob</option>
                         <option value="airfryer">Air Fryer</option>
                         <option value="tv">Television</option>
-                        <option value="ev_car_charge">EV / Car Charger</option>
+                        <option value="car_charge">Car Charger</option>
                         <option value="microwave">Microwave</option>
                         <option value="led_lights">LED Lighting</option>
                     </select>
@@ -113,7 +116,7 @@
                     </thead>
                     <tbody>
                         {% for device in devices %}
-                        <tr>
+                        <tr class="device-table-row" data-device-name="{{ device.deviceName }}">
                             <td>{{ device.deviceName }}</td>
                             <td>{{ device.deviceType }}</td>
                             <td>{{ device.powerRating }}</td>
@@ -133,7 +136,7 @@
         <div class="tile-bottom">
             <div class="tile-bottom-container" style="display: flex; justify-content: space-evenly; width: 100%;">
                 <button class="btn btn-dark">Edit Device</button>
-                <button class="btn btn-dark">Delete Device</button>
+                <button class="deleteButton btn btn-dark">Delete Device</button>
             </div>
         </div>
     </div>
