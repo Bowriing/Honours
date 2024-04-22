@@ -2,9 +2,7 @@
 {% block title %} Home {% endblock %}
 {%block scripts%}
 <script src="{{ url_for('static', filename='scripts/checkboxes.js') }}"></script>
-<script src="{{ url_for('static', filename='scripts/deviceInteractions.js') }}"></script>
 {%endblock%}
-
 {%block content %}
 <div class="header-container">
     <h1 class="page-header">Add Device Information</h1>
@@ -25,7 +23,7 @@
                     <select class="form-control" id="deviceType" name="deviceType" placeholder="Please Select Type of Device">
                         <option value="" disabled selected hidden>Please Select Type of Device</option>
                         <option value="kettle">Kettle</option>
-                        <option value="fridge">fridge</option>
+                        <option value="fridge">Fridge</option>
                         <option value="computer">Computer / PC</option>
                         <option value="hob">Electric Hob</option>
                         <option value="airfryer">Air Fryer</option>
@@ -39,17 +37,10 @@
                     <label for="powerRating">Power Rating (Watts)</label>
                     <input type="number" class="form-control" id="powerRating" name="powerRating" placeholder="Enter Device Wattage">
 
-                    <label for="deviceConstant">Constant</label>
-                    <select name="deviceConstant" id="deviceConstant" class="form-control" placeholder="Is This Device Constantly In Use?">
-                        <option value="no" id="noContsant">No</option>
-                        <option value="yes" id="yesConstant">Yes</option>
-                    </select>
-
                     <label for="deviceAge">Device Age</label>
                     <input type="number" class="form-control" id="deviceAge" name="deviceAge" placeholder="Enter Device Age">
 
                     <label for="deviceTimezone">Timezones</label>
-
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="deviceTimezone" id="morningZone" value="morning"></input>
                         <label class="form-check-label" for="morningZone">Morning (6AM - 11AM)</label>
@@ -69,15 +60,7 @@
                         <input class="form-check-input" type="checkbox" name="deviceTimezone" id="nightZone" value="night"></input> 
                         <label class="form-check-label" for="nightZone">Night (9PM - 6AM)</label>
                     </div>
-
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="deviceTimezone" id="randomZone" value="random"></input> 
-                        <label class="form-check-label" for="randomZone">Random (Varied)</label>
-                    </div>
-
-                    <br />
-
-                    
+                    <br />                 
                 </div>
             </form>
         </div>
@@ -109,7 +92,6 @@
                             <th>Device Name</th>
                             <th>Type</th>
                             <th>Power Rating</th>
-                            <th>Constant?</th>
                             <th>Age</th>
                             <th>Zones</th>
                         </tr>
@@ -120,9 +102,11 @@
                             <td>{{ device.deviceName }}</td>
                             <td>{{ device.deviceType }}</td>
                             <td>{{ device.powerRating }}</td>
-                            <td>{{ device.constantDevice }}</td>
                             <td>{{ device.deviceAge }}</td>
-                            <td>{{ device.timeZones }}</td>
+                            <td>{% for time in device.timeZones %}
+                                {{time}},
+                                {% endfor %}
+                            </td>
                         </tr>
                         {% else %}
                         <tr>

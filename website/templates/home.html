@@ -1,6 +1,14 @@
 {% extends "base.html"%}
 {% block title %} Home {% endblock %}
-{%block scripts%}<script src="{{ url_for('static', filename='scripts/csvUploadNameUpdater.js') }}"></script>{%endblock%}
+{% block head %}{% endblock %}
+{%block scripts%}
+<script src="{{ url_for('static', filename='scripts/csvUploadNameUpdater.js') }}"></script>
+<script>
+    function submitForm() {
+        document.getElementById("csvUploadForm").submit(); // Submit the form when a file is chosen
+    }
+</script>
+{%endblock%}
 
 {%block content %}
 
@@ -12,26 +20,47 @@
 
     <div class="tile" style="flex: 2;">
         <h2 class="tile-title text-dark">Estimations</h2>
-        <div class="tile-content" style="flex-direction: column;">
-            {% if processingOutput %}
-                {% for device in processingOutput %}
+        <div class="tile-content" style="flex-direction: column; overflow: scroll;">
+            {% if power_output%}
+                <div class="date">
+                    Date: {{date}}
+                </div>
+                <div class="power_output">
+                    Total Power Used Today:
+                    {{ power_output }} kWh
+                </div>
+
+                {% if output_devices %}
+                {% for device in output_devices %}
                 <div class="device_output_box">
-                    <div class="device_output_name">
-                        Name: {% print (device.name) %}
-                    </div>
-                    <div class="device_output_type">
-                       Device: {% print (device.deviceType) %}
+                    {{device.name}}
+                    <div class="device-power">
+                        {{device.final_power}} kWh
                     </div>
                 </div>
                 {% endfor %}
+                {% endif %}
             {% endif %}
  
         </div>
         <div class="tile-bottom">
-            <form method="POST" action="/run-processing">
-                <button class="btn btn-dark">Get Processed Results</button>
+            <form method="POST" action="/home/estimations" style="display: flex; width: 100%; justify-content: space-evenly;">
+                <input id="date" name="date" class="form-control" type="date" placeholder="Select Day" style="max-width: 150px;">
+                <button type="submit" class="btn btn-dark">Estimate</button>
             </form>
         </div>
+    </div>
+
+    <div class="tile" style="flex: 2;">
+        <h2 class="tile-title text-dark">GPT Test</h2>
+        <form method="POST" action="/response">
+            <button type="submit" class="btn btn-dark">Get GPT Response</button>
+        </form>
+        <p class="response">
+            {% if gpt_response %}
+                {{gpt_response}}
+            {% endif %}
+        </p>
     </div>
 
     <div class="tile" style="flex: 3;">
@@ -63,7 +92,6 @@
                                     {% endfor %}
                                 </tr>
                             {% endif %}
-                        {% else %}
                         {% endif %}
                     {% endfor %}
                     </tbody>
@@ -75,17 +103,17 @@
             </div>
         
             <div class="tile-bottom" style="justify-content: space-evenly;">
-                <div class="tile-bottom-container" style="display: flex; justify-content: space-evenly; width: 100%;">
-                    <label for="csv_file" class="btn btn-dark" style="margin: 0!important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 125px;">Choose CSV</label>
-                    <form method="POST" enctype="multipart/form-data" action="/upload-csv">
-                        <input class="file-upload" type="file" id="csv_file" name="csv_file" accept=".csv" required>
-                        <button type="submit" class="btn btn-dark">Upload CSV</button>
+                <div class="tile-bottom-container">
+                    <form id="csvUploadForm" method="POST" enctype="multipart/form-data" action="/upload-csv">
+                        <label for="csv_file" class="btn btn-dark" style="margin: 0!important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 125px;">Choose CSV</label>
+                        <input class="file-upload" type="file" id="csv_file" name="csv_file" accept=".csv" required onchange="submitForm()">
+                        <button type="submit" class="btn btn-dark" style="display: none;">Upload CSV</button>
                     </form>
                     
                     <form method="POST" action="/delete-csv">
                         <button type="submit" class="btn btn-dark">Delete CSV</button>
                     </form>
-                    
+
                     <form method="POST" action="/howto">
                         <button class="btn btn-dark">Help</button>
                     </form>

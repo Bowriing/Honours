@@ -30,10 +30,12 @@ def create_app():
     #import blueprints
     from .views import views
     from .auth import auth
+    from .chatgpt import gpt
 
     #register blueprint and set prefixes
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
+    app.register_blueprint(gpt, url_prefix='/')
 
     #register a jinja filter for formatting CSV table output
     app.jinja_env.filters['custom_datetime_format'] = custom_datetime_format

@@ -5,8 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
 from .models import CSVData
-from .processing import processingMain
-
+from .processing import main
 
 
 auth = Blueprint('auth', __name__)
@@ -26,8 +25,7 @@ def login():
             else:
                 flash('Incorrect password, please try again.', category='error')
         else:
-            flash('Email does not exist', category='error')
-            
+            flash('Email does not exist', category='error')           
     return render_template('login.html')
                 
 @auth.route('/logout')
@@ -124,7 +122,6 @@ def add_device():
         deviceName = request.form.get('deviceName')
         deviceType = request.form.get('deviceType')
         powerRating = request.form.get('powerRating')
-        deviceConstant = request.form.get('deviceConstant')
         deviceAge = request.form.get('deviceAge')
         timeZones = request.form.getlist('deviceTimezone')
         
@@ -134,15 +131,13 @@ def add_device():
             flash('Device type is required.', category='error')
         elif not powerRating:
             flash('Power rating is required.', category='error')
-        elif not deviceConstant:
-            flash('Please say if this device is in constant use.', category='error')
         elif not deviceAge:
             flash('Please say the age of your device.', category='error')
         elif not timeZones:
             flash('Please check the timezone(s) this device is used in.', category='error')
 
         else:
-            new_device = Device(user_id = current_user.id, deviceName = deviceName, deviceType = deviceType, powerRating = powerRating, constantDevice = deviceConstant, deviceAge = deviceAge, timeZones = timeZones)
+            new_device = Device(user_id = current_user.id, deviceName = deviceName, deviceType = deviceType, powerRating = powerRating, deviceAge = deviceAge, timeZones = timeZones)
             db.session.add(new_device)
             current_user.devices.append(new_device)
             flash('Device Successfully Added.', category='success')
@@ -152,18 +147,10 @@ def add_device():
     
     return redirect(url_for('views.getUserData'))
 
-@auth.route('/run-processing', methods=['POST'])
-@login_required
-def runProcessing():
-    processingMain()
-
-    return redirect(url_for('views.home'))
-
 @auth.route('/delete-device', methods=['POST'])
 @login_required
 def deleteDevice():
     data = request.json
     device_name = data.__getattribute__('device_name')
-
     print(device_name)
     flash('Device Successfully Deleted.', category='success')

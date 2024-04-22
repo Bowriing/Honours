@@ -71,6 +71,12 @@
     border-radius: 10px;
 }
 
+.tile-bottom-container{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
 /* This hides the file upload */
 .file-upload {
     opacity: 0;
@@ -97,6 +103,7 @@
     display: flex;
     flex-direction: column;
     background-color: #212529;
+    color: white;
     border-radius: 10px;
     padding: 15px;
     margin-bottom: 10px;
@@ -104,10 +111,19 @@
     width: 200px;
 }
 
-.device_output_name{
-    color: white;
+.power_output{
+    color: red;
+    font-weight: bold;
 }
 
-.device_output_type{
-    color: red;
+.device-power{
+    background-color: red;
+    border-radius: 5px;
+    padding: 2px;
+}
+
+.btn{
+    font-size: 15px;
+    overflow: hidden;
+    min-width: 100px;
 }

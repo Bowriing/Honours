@@ -22,7 +22,6 @@ class Device(db.Model):
     deviceName = db.Column(db.String(150))
     deviceType = db.Column(db.String(50))
     powerRating = db.Column(db.Integer)
-    constantDevice = db.Column(db.String(10))
     deviceAge = db.Column(db.Integer)
     timeZones = db.Column(db.JSON)
     
