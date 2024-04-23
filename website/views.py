@@ -21,6 +21,11 @@ def homeEstimaitons():
         return redirect(url_for('views.home'))
     
     csv_data = current_user.csv_data
+
+    if not csv_data:
+        flash('Please ensure you have uploaded a CSV Data file', category='error')
+        return redirect(url_for('views.home'))
+    
     output_devices, power_output, date = main(date)
     return render_template("home.html", csv_data=csv_data, output_devices=output_devices, power_output = power_output, date=date)
 

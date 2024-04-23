@@ -2,6 +2,8 @@
 {% block title %} Home {% endblock %}
 {%block scripts%}
 <script src="{{ url_for('static', filename='scripts/checkboxes.js') }}"></script>
+<script src="static/scripts/getPowerRating.js"></script>
+
 {%endblock%}
 {%block content %}
 <div class="header-container">
@@ -13,7 +15,7 @@
         <h2 class="tile-title text-dark">Add New Devices</h2>
         <div class="tile-content" style="flex-direction: column;">
 
-            <form method="POST" action="/add-device" style="width: 500px; overflow-y: scroll;" align="center" id="add_form">
+            <form method="POST" action="/add-device" style="width: 500px;" align="center" id="add_form">
                 <div class="form-group">
 
                     <label for="deviceName">Device Name</label>
@@ -36,6 +38,13 @@
 
                     <label for="powerRating">Power Rating (Watts)</label>
                     <input type="number" class="form-control" id="powerRating" name="powerRating" placeholder="Enter Device Wattage">
+
+                    <div class="gpt-container">
+                        <p class="gpt-button-text">Dont know power rating? Ask GPT!</p>
+                        <button class="gpt-button" type="button" id="fetchPowerButton">
+                            <img class="gpt-image" src="/static/gpt.png">
+                        </button>
+                    </div>
 
                     <label for="deviceAge">Device Age</label>
                     <input type="number" class="form-control" id="deviceAge" name="deviceAge" placeholder="Enter Device Age">
@@ -72,49 +81,25 @@
         </div>
     </div>
 
-    <!--
-    #in content need a GET request to get data from db model for devices
-    #get deviceName powerRating and ID 
-    #only display deviceName and poweRatingh
-    #the edit button allows devices name and powerRating to be changed NOT type 
-    #must remove device to change type
-    #remove button gets the device ID search through the DB and removes all fields of associated device
-    -->
-
     <div class="tile" style="flex: 1;">
         <h2 class="tile-title text-dark">Current Devices</h2>
 
         <div class="tile-content" style="flex-direction: column;">
-            <div class="scrollable-table" style="height: 475px; width: 100%;">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Device Name</th>
-                            <th>Type</th>
-                            <th>Power Rating</th>
-                            <th>Age</th>
-                            <th>Zones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for device in devices %}
-                        <tr class="device-table-row" data-device-name="{{ device.deviceName }}">
-                            <td>{{ device.deviceName }}</td>
-                            <td>{{ device.deviceType }}</td>
-                            <td>{{ device.powerRating }}</td>
-                            <td>{{ device.deviceAge }}</td>
-                            <td>{% for time in device.timeZones %}
-                                {{time}},
-                                {% endfor %}
-                            </td>
-                        </tr>
-                        {% else %}
-                        <tr>
-                            <td colspan="3">No devices added yet.</td>
-                        </tr>
+            <div class="device-output-container" style="height: 475px; width: 100%;">
+                {% for device in devices %}
+                <div class="device-output">
+                    <p class="device-info" style="font-weight: bold;">{{ device.deviceName }}</p>
+                    <p class="device-info">Type: {{ device.deviceType }}</p>
+                    <p class="device-info">Power Rating: {{ device.powerRating }} Watts</p>
+                    <p class="device-info">Age: {{ device.deviceAge }} Years</p>
+                    In Use:
+                    <div class="device-zones device-info">
+                        {% for zone in device.timeZones %}
+                            <p class="device-zone">'{{zone}}'</p>
                         {% endfor %}
-                    </tbody>
-                </table>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
         </div>
         <div class="tile-bottom">

@@ -20,7 +20,7 @@
 
     <div class="tile" style="flex: 2;">
         <h2 class="tile-title text-dark">Estimations</h2>
-        <div class="tile-content" style="flex-direction: column; overflow: scroll;">
+        <div class="tile-content" style="flex-direction: column; {{ 'overflow-y: scroll;' if power_output else '' }}">
             {% if power_output%}
                 <div class="date">
                     Date: {{date}}
@@ -32,16 +32,15 @@
 
                 {% if output_devices %}
                 {% for device in output_devices %}
-                <div class="device_output_box">
-                    {{device.name}}
-                    <div class="device-power">
-                        {{device.final_power}} kWh
+                    <div class="device_output_box">
+                        {{device.name}}
+                        <div class="device-power">
+                            {{device.final_power}} kWh
+                        </div>
                     </div>
-                </div>
                 {% endfor %}
                 {% endif %}
             {% endif %}
- 
         </div>
         <div class="tile-bottom">
             <form method="POST" action="/home/estimations" style="display: flex; width: 100%; justify-content: space-evenly;">
@@ -53,14 +52,17 @@
 
     <div class="tile" style="flex: 2;">
         <h2 class="tile-title text-dark">GPT Test</h2>
-        <form method="POST" action="/response">
-            <button type="submit" class="btn btn-dark">Get GPT Response</button>
-        </form>
-        <p class="response">
-            {% if gpt_response %}
-                {{gpt_response}}
-            {% endif %}
-        </p>
+        <div class="tile-content">
+            <form method="POST" action="/response">
+                <button type="submit" class="btn btn-dark">Get GPT Response</button>
+            </form>
+            <p class="response">
+                {% if gpt_response %}
+                    {{gpt_response}}
+                {% endif %}
+            </p>
+        </div>
+
     </div>
 
     <div class="tile" style="flex: 3;">
