@@ -9,7 +9,7 @@ views = Blueprint('views', __name__)
 def home():
     #retrieve the csv data if any from user
     csv_data = current_user.csv_data
-    return render_template("home.html", csv_data=csv_data)
+    return render_template("home.html.j2", csv_data=csv_data)
 
 @views.route('/home/estimations', methods=['POST'])
 @login_required
@@ -27,20 +27,20 @@ def homeEstimaitons():
         return redirect(url_for('views.home'))
     
     output_devices, power_output, date = main(date)
-    return render_template("home.html", csv_data=csv_data, output_devices=output_devices, power_output = power_output, date=date)
+    return render_template("home.html.j2", csv_data=csv_data, output_devices=output_devices, power_output = power_output, date=date)
 
 @views.route('/preferences')
 @login_required
 def preferences():
-    return render_template("preferences.html")
+    return render_template("preferences.html.j2")
 
 @views.route('/howto', methods=['POST'])
 @login_required
 def howto():
-    return render_template("howto.html")
+    return render_template("howto.html.j2")
 
 @views.route('/getUserData')
 @login_required
 def getUserData():
     devices = current_user.devices
-    return render_template("getUserData.html", devices=devices) #pass in devies to load any existing devices from user
+    return render_template("getUserData.html.j2", devices=devices) #pass in devies to load any existing devices from user

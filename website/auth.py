@@ -26,7 +26,7 @@ def login():
                 flash('Incorrect password, please try again.', category='error')
         else:
             flash('Email does not exist', category='error')           
-    return render_template('login.html')
+    return render_template('login.html.j2')
                 
 @auth.route('/logout')
 @login_required #cannot be accessed unless logged in
@@ -63,7 +63,7 @@ def sign_up():
             flash('Account Successfully Created.', category='success')
             return redirect(url_for('views.home'))
             
-    return render_template("sign-up.html")
+    return render_template("sign-up.html.j2")
 
 #CSV FUNCTIONS
 @auth.route('/upload-csv', methods = ['POST'])
