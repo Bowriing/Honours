@@ -39,8 +39,8 @@ def preferences():
 def howto():
     return render_template("howto.html.j2")
 
-@views.route('/getUserData')
+@views.route('/devices')
 @login_required
-def getUserData():
+def devices():
     devices = current_user.devices
-    return render_template("getUserData.html.j2", devices=devices) #pass in devies to load any existing devices from user
+    return render_template("devices.html.j2", devices=devices) #pass in devies to load any existing devices from user

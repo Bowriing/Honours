@@ -3,11 +3,10 @@
 {%block scripts%}
 <script src="{{ url_for('static', filename='scripts/checkboxes.js') }}"></script>
 <script src="static/scripts/getPowerRating.js"></script>
-
 {%endblock%}
 {%block content %}
 <div class="header-container">
-    <h1 class="page-header">Add Device Information</h1>
+    <h1 class="page-header">Devices</h1>
 </div>
 
 <div class="flex-tile-con">
@@ -19,25 +18,39 @@
                 <div class="form-group">
 
                     <label for="deviceName">Device Name</label>
-                    <input type="text" class="form-control" id="deviceName" name="deviceName" placeholder="Enter Name of Device">
+                    <input type="text" class="form-control" id="deviceName" name="deviceName" placeholder="Enter Name, Brand, Any Extra Info if Possible.">
 
                     <label for="deviceType">Device Type</label>
-                    <select class="form-control" id="deviceType" name="deviceType" placeholder="Please Select Type of Device">
-                        <option value="" disabled selected hidden>Please Select Type of Device</option>
-                        <option value="kettle">Kettle</option>
+                    <select class="form-control" id="deviceType" name="deviceType" placeholder="If type not found, please do not add this device">
+                        <option value="" disabled selected hidden>If Type Not Found, Do Not Add Device</option>
                         <option value="fridge">Fridge</option>
-                        <option value="computer">Computer / PC</option>
+                        <option value="oven">Electric Oven</option>
                         <option value="hob">Electric Hob</option>
-                        <option value="airfryer">Air Fryer</option>
-                        <option value="tv">Television</option>
-                        <option value="car_charge">Car Charger</option>
                         <option value="microwave">Microwave</option>
-                        <option value="led_lights">LED Lighting</option>
+                        <option value="dishwasher">Dishwasher</option>
+                        <option value="toaster">Toaster</option>
+                        <option value="kettle">Kettle</option>
+                        <option value="fryer">Air Fryer / Deep Fryer</option>
+                        <option value="blender">Blender</option>
+                        <option value="slowcooker">Slow Cooker</option>
+
+                        <option value="washing_machine">Washing Machine</option>
+                        <option value="dryer">Dryer</option>
+
+                        <option value="tv">TV</option>
+                        <option value="console">Gaming Console</option>
+                        <option value="sound_system">Sound System</option>
+                        <option value="entertainment_system">Entertainment System</option>
+
+                        <option value="fan">Fan</option>
+                        <option value="heater">Electric Heater</option>
+                        <option value="monitor">PC Monitor</option>
+                        <option value="computer">PC / Laptop</option>
                     </select>
 
 
                     <label for="powerRating">Power Rating (Watts)</label>
-                    <input type="number" class="form-control" id="powerRating" name="powerRating" placeholder="Enter Device Wattage">
+                    <input type="number" class="form-control" id="powerRating" name="powerRating" placeholder="Power Rating in Watts">
 
                     <div class="gpt-container">
                         <p class="gpt-button-text">Dont know power rating? Ask GPT!</p>
@@ -84,11 +97,11 @@
     <div class="tile" style="flex: 1;">
         <h2 class="tile-title text-dark">Current Devices</h2>
 
-        <div class="tile-content" style="flex-direction: column;">
+        <div class="tile-content" style="flex-direction: column; overflow-y: scroll">
             <div class="device-output-container" style="height: 475px; width: 100%;">
                 {% for device in devices %}
-                <div class="device-output">
-                    <p class="device-info" style="font-weight: bold;">{{ device.deviceName }}</p>
+                <div class="device-output" style="position: relative;">
+                    <p class="device-info" id="device-name" style="font-weight: bold;">{{ device.deviceName }}</p>
                     <p class="device-info">Type: {{ device.deviceType }}</p>
                     <p class="device-info">Power Rating: {{ device.powerRating }} Watts</p>
                     <p class="device-info">Age: {{ device.deviceAge }} Years</p>
@@ -104,8 +117,10 @@
         </div>
         <div class="tile-bottom">
             <div class="tile-bottom-container" style="display: flex; justify-content: space-evenly; width: 100%;">
-                <button class="btn btn-dark">Edit Device</button>
-                <button class="deleteButton btn btn-dark">Delete Device</button>
+                <form action="/delete-device" method="POST" style="display: flex; justify-content:space-evenly; width:70%;">
+                <input class="form-control" type="text" id="delete-device-name" name="delete-device-name" placeholder="Name of Device (Case Sensitive)">
+                <button class="btn btn-dark" style="font-size: 12px;" type="submit">Delete Device</button>
+                </form>
             </div>
         </div>
     </div>

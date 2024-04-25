@@ -145,12 +145,21 @@ def add_device():
         db.session.commit()
 
     
-    return redirect(url_for('views.getUserData'))
+    return redirect(url_for('views.devices'))
 
 @auth.route('/delete-device', methods=['POST'])
 @login_required
-def deleteDevice():
-    data = request.json
-    device_name = data.__getattribute__('device_name')
+def delete_device():
+    user_id = current_user.id
+    device_name = request.form.get('delete-device-name')
+    print(user_id)
     print(device_name)
-    flash('Device Successfully Deleted.', category='success')
+    found_device = Device.query.filter_by(user_id=user_id, deviceName=device_name).first()
+    if found_device == None:
+        flash('No device matching given name', category='error')
+        return redirect(url_for('views.devices'))
+
+    Device.query.filter_by(user_id=user_id, deviceName=device_name).delete()
+    db.session.commit()
+    flash('Successfully deleted device', category='success')
+    return redirect(url_for('views.devices'))

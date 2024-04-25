@@ -49,8 +49,6 @@ def main(date):
 
     return devices_list, daily_power_use, date
 
-
-
 def get_devices():
     devices = []
     for device in current_user.devices:
@@ -74,6 +72,7 @@ def total_device_usage(device):
     rel_max_usage = max_usage*count#have to multiply by how many times the device has appeared in the logs
 
     match type:
+        #Kitchen Devices
         case 'kettle':#kettle used for 2 minutes at full load at a time
             time_in_use_percent = 2 / 30#2 minutes out of the 30 min log
             total_usage = rel_max_usage * time_in_use_percent
@@ -130,6 +129,10 @@ def total_device_usage(device):
             total_usage = float(total_usage / 1000)
             total_usage = round(total_usage, 2)
             return total_usage
+        
+        #Bedroom Devices
+        #Living Room Devices
+        #Misc Devices
 
 def checkUserCSVcontent():
     #check if user has csv data, if not inform them and return
