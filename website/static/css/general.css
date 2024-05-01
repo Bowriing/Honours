@@ -118,8 +118,8 @@
     border-radius: 10px;
     padding: 15px;
     margin-bottom: 10px;
-    max-width: 200px;
     width: 200px;
+    margin:10px
 }
 
 .power_output{
@@ -137,4 +137,18 @@
     font-size: 15px;
     overflow: hidden;
     min-width: 100px;
+}
+
+.zone-title{
+    font-size: 18px;
+}
+
+.zone-device-con{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Create three columns, each taking one fraction of the available space */
+    margin-bottom: 50px;
+}
+
+.device-zone-output-info{
+    font-size: 12px;
 }

@@ -16,9 +16,9 @@ def fetch_power_rating():
     device_name = request.json.get('deviceName')
     device_type = request.json.get('deviceType')
 
-    if (device_name or device_type == None):
-        power_rating = 0
-        return jsonify({'power_rating' : power_rating})
+    #if (device_name or device_type == None):
+        #power_rating = 0
+        #return jsonify({'power_rating' : power_rating})
 
     power_rating = request_gpt(device_name=device_name, device_type=device_type)
 

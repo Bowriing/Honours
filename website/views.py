@@ -26,8 +26,8 @@ def homeEstimaitons():
         flash('Please ensure you have uploaded a CSV Data file', category='error')
         return redirect(url_for('views.home'))
     
-    output_devices, power_output, date = main(date)
-    return render_template("home.html.j2", csv_data=csv_data, output_devices=output_devices, power_output = power_output, date=date)
+    output_devices, power_output, date, morning_devices, midday_devices, evening_devices, night_devices = main(date)
+    return render_template("home.html.j2", csv_data=csv_data, output_devices=output_devices, power_output = power_output, date=date, morning_devices=morning_devices, midday_devices=midday_devices, evening_devices=evening_devices, night_devices=night_devices)
 
 @views.route('/preferences')
 @login_required

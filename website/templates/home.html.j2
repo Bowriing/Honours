@@ -13,13 +13,19 @@
 {%block content %}
 
 <div class="header-container">
-    <h1 class="page-header">Home</h1>
+    <h1 class="page-header">
+    {%if date%}
+    {{date}}
+    {%endif%}
+    {%if not date%}
+    Home
+    {%endif%}
+    </h1>
 </div>
 
 <div class="flex-tile-con">
-
     <div class="tile" style="flex: 2;">
-        <h2 class="tile-title text-dark">Estimations</h2>
+        <h2 class="tile-title text-dark">Daily Totals</h2>
         <div class="tile-content" style="flex-direction: column; {{ 'overflow-y: scroll;' if power_output else '' }}">
             {% if power_output%}
                 <div class="date">
@@ -31,16 +37,16 @@
                 </div>
 
                 {% if output_devices %}
-                {% for device in output_devices %}
-                    <div class="device_output_box">
-                        {{device.name}}
-                        <div class="device-power">
-                            {{device.final_power}} kWh
+                    {% for device in output_devices %}
+                        <div class="device_output_box">
+                            <div class="device-output-name">{{device.name}}</div>
+                            <div class="device-power">
+                                {{device.final_power}} kWh
+                            </div>
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
                 {% endif %}
-            {% endif %}
+            {%endif%}
         </div>
         <div class="tile-bottom">
             <form method="POST" action="/home/estimations" style="display: flex; width: 100%; justify-content: space-evenly;">
@@ -49,6 +55,76 @@
             </form>
         </div>
     </div>
+
+    {%if morning_devices or midday_devices or evening_devices or night_devices%}
+        <div class="tile" style="flex: 3;">
+            <h2 class="tile-title text-dark">Zone Analysis</h2>
+
+            <div class="tile-content" style="flex-direction: column; {{ 'overflow-y: scroll;' if morning_devices or midday_devices or evening_devices or night_devices else '' }}">
+                {%if morning_devices%}
+                <div class="zone-title">Morning</div>
+                <div class="zone-device-con">
+                    {% for device in morning_devices %}
+                        <div class="device_output_box">
+                            <div class="device-output-name">{{device.name}}</div>
+                            <div class="device-zone-output-info">Power Used In Zone:</div>
+                            <div class="device-power">
+                                {{device.morning_power}} kWh
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+                {%if midday_devices%}
+                <div class="zone-title">Midday</div>
+                <div class="zone-device-con">
+                    {% for device in midday_devices %}
+                         <div class="device_output_box">
+                            <div class="device-output-name">{{device.name}}</div>
+                            <div class="device-zone-output-info">Power Used In Zone:</div>
+                            <div class="device-power">
+                                {{device.midday_power}} kWh
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>  
+                {% endif %}
+               
+                {%if evening_devices%}
+                <div class="zone-title">Evening</div>
+                <div class="zone-device-con">
+                    {% for device in evening_devices %}
+                         <div class="device_output_box">
+                            <div class="device-output-name">{{device.name}}</div>
+                            <div class="device-zone-output-info">Power Used In Zone:</div>
+                            <div class="device-power">
+                                {{device.evening_power}} kWh
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div> 
+                {% endif %}
+
+                {%if evening_devices%}
+                <div class="zone-title">Night</div>
+                <div class="zone-device-con">
+                    {% for device in night_devices %}
+                         <div class="device_output_box">
+                            <div class="device-output-name">{{device.name}}</div>
+                            <div class="device-zone-output-info">Power Used In Zone:</div>
+                            <div class="device-power">
+                                {{device.night_power}} kWh
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="tile-bottom"></div>
+        </div>
+    {%endif%}
 
     <div class="tile" style="flex: 3;">
         <h2 class="tile-title text-dark">CSV Data</h2>
@@ -83,6 +159,7 @@
                     {% endfor %}
                     </tbody>
                 </table>
+            <p>We Have Capped The Output To Only Show 100 Logs For Performance Purposes</p>
             </div>
             {% else %}
             <p class="text-dark">No CSV data found.</p>

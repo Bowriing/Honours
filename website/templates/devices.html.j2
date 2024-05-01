@@ -44,7 +44,6 @@
 
                         <option value="fan">Fan</option>
                         <option value="heater">Electric Heater</option>
-                        <option value="monitor">PC Monitor</option>
                         <option value="computer">PC / Laptop</option>
                     </select>
 
@@ -100,8 +99,8 @@
         <div class="tile-content" style="flex-direction: column; overflow-y: scroll">
             <div class="device-output-container" style="height: 475px; width: 100%;">
                 {% for device in devices %}
-                <div class="device-output" style="position: relative;">
-                    <p class="device-info" id="device-name" style="font-weight: bold;">{{ device.deviceName }}</p>
+                <div class="device-output" style="position: relative; overflow: hidden;">
+                    <p class="device-info" id="{{ device.deviceName }}" style="font-weight: bold;">{{ device.deviceName }}</p>
                     <p class="device-info">Type: {{ device.deviceType }}</p>
                     <p class="device-info">Power Rating: {{ device.powerRating }} Watts</p>
                     <p class="device-info">Age: {{ device.deviceAge }} Years</p>
