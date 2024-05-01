@@ -28,9 +28,6 @@
         <h2 class="tile-title text-dark">Daily Totals</h2>
         <div class="tile-content" style="flex-direction: column; {{ 'overflow-y: scroll;' if power_output else '' }}">
             {% if power_output%}
-                <div class="date">
-                    Date: {{date}}
-                </div>
                 <div class="power_output">
                     Total Power Used Today:
                     {{ power_output }} kWh
