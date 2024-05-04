@@ -129,7 +129,7 @@ def main(date):
     return devices_list, daily_power_use, date, morning_devices, midday_devices, evening_devices, night_devices
 
 def get_devices():
-    devices = []
+    devices = [] 
     for device in current_user.devices:
         name = device.deviceName
         type = device.deviceType
@@ -162,8 +162,8 @@ def calculate_power_increase(original_power, age, increase_rate=1.5):
     return new_power
 
 
-#TOTAL DAY DEVICE USAGE
-def total_device_usage(device, season):
+#OLD METHOD FOR CALCULATION COULD NOT USE IT AS IT WAS BASED ON DAILY OUTPUTS NOT ZONE OUTPUTS
+"""def total_device_usage(device, season):
     count = device.counter
     power_rating = device.powerRating #this also represents the devices watt-hour usage
     type = device.type
@@ -381,7 +381,7 @@ def total_device_usage(device, season):
                 total_usage = total_usage * 3.5 # for a use of 3/4 times per day zone
                 total_usage = float(total_usage / 1000)
                 total_usage = round(total_usage, 2)
-                return total_usage
+                return total_usage """
 
 
 def checkUserCSVcontent():

@@ -29,12 +29,7 @@ def homeEstimaitons():
     output_devices, power_output, date, morning_devices, midday_devices, evening_devices, night_devices = main(date)
     return render_template("home.html.j2", csv_data=csv_data, output_devices=output_devices, power_output = power_output, date=date, morning_devices=morning_devices, midday_devices=midday_devices, evening_devices=evening_devices, night_devices=night_devices)
 
-@views.route('/preferences')
-@login_required
-def preferences():
-    return render_template("preferences.html.j2")
-
-@views.route('/howto', methods=['POST'])
+@views.route('/howto')
 @login_required
 def howto():
     return render_template("howto.html.j2")
