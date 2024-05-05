@@ -1,10 +1,15 @@
 from openai import OpenAI
+from dotenv import load_dotenv
 import os
 from flask import Blueprint, flash, jsonify, request, redirect, url_for
 from flask_login import login_required, current_user
 from .auth import delete_device
 
 gpt = Blueprint('gpt', __name__)
+
+#using the .env file
+load_dotenv()
+api_key = os.getenv("OPENAI_API_KEY")
 
 client = OpenAI(
     api_key=os.environ['OPENAI_API_KEY'],
